@@ -1,4 +1,4 @@
-import React, { useCallback, createContext, useState } from 'react';
+import React, { useCallback, createContext, useState, useContext } from 'react';
 
 import api from '../services/api';
 
@@ -52,4 +52,14 @@ const AuthProvider: React.FC = ({ children }) => {
   );
 };
 
-export { AuthProvider, AuthContext };
+function useAuth(): AuthContextData {
+  const context = useContext(AuthContext);
+
+  if (!context) {
+    throw new Error('Para usar o useAuth, é obrigatório o usuário do Provider');
+  }
+
+  return context;
+}
+
+export { AuthProvider, useAuth };
